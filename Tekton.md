@@ -61,3 +61,6 @@ data:
   bucket.service.account.secret.key: gcs-config
   bucket.service.account.field.name: GOOGLE_APPLICATION_CREDENTIALS
 ```
+
+Setup for local
+https://github.com/tektoncd/pipeline/blob/master/docs/developers/local-setup.md
