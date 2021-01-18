@@ -20,33 +20,34 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+const (
+	StatePending  = "PENDING"
+	StateFinished = "FINISHED"
+)
+
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // CheckWeatherSpec defines the desired state of CheckWeather
 type CheckWeatherSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of CheckWeather. Edit CheckWeather_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	City string `json:"city,omitempty"`
 }
 
 // CheckWeatherStatus defines the observed state of CheckWeather
 type CheckWeatherStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	State       string `json:"state,omitempty"`
+	Temperature int32  `json:"temperature,omitempty"`
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // CheckWeather is the Schema for the checkweathers API
 type CheckWeather struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   CheckWeatherSpec   `json:"spec,omitempty"`
-	Status CheckWeatherStatus `json:"status,omitempty"`
+	Spec              CheckWeatherSpec   `json:"spec,omitempty"`
+	Status            CheckWeatherStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

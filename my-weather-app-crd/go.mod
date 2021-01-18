@@ -3,6 +3,7 @@ module github.com/Manifaust/k8s-custom-resources-learning-aid/examples/weather-a
 go 1.13
 
 require (
+	github.com/briandowns/openweathermap v0.16.0
 	github.com/go-logr/logr v0.1.0
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
