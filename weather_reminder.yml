@@ -1,0 +1,9 @@
+# my-weather-reminder.yml
+apiVersion: weather.com/v1alpha1
+kind: Reminder
+metadata:
+   name: reminder-toronto
+spec:
+   city: Toronto, ON
+   time: '0700'
+   email: foo@example.com
