@@ -18,7 +18,6 @@ package controllers
 
 import (
 	"context"
-
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -48,30 +47,16 @@ func (r *WeatherWarningReconciler) Reconcile(req ctrl.Request) (ctrl.Result, err
 		log.Error(err, "unable to fetch WeatherWarning")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-	maxtemperature := ww.Spec.MaxTemperature
-	log.Info("current max comfort temperature set at", "maxtemperature", maxtemperature)
+	temperatureThreshold := ww.Spec.TempThreshHold
+	log.Info("current max comfort temperature set at", "temperatureThreshold", temperatureThreshold)
 
-	log.Info("Getting CheckWeather resource")
-	var cw weatherappv1alpha1.CheckWeather
-	if err := r.Get(ctx, "checkweather", &cw); err != nil {
-		log.Error(err, "unable to fetch CheckWeather")
+	log.Info("fetching CheckWeather resource")
+	myKind := weatherappv1alpha1.CheckWeather{}
+	if err := r.Client.Get(ctx, req.NamespacedName, &myKind); err != nil {
+		log.Error(err, "failed to get MyKind resource")
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
-
-	current_temp := int32(cw.Status.Temperature)
-	log.Info("current temperature", "current", current_temp)
-
-	// if current_temp < comfort_temp {
-	// 	log.Info("DANGER: Too cold")
-	// } else {
-	// 	log.Info("nothing to see here")
-	// }
-	//
-	// log.Info("Updating the status of the resource")
-	// if err := r.Status().Update(ctx, &ww); err != nil {
-	// 	log.Error(err, "Error updating status")
-	// 	return ctrl.Result{}, err
-	// }
+	log.Info("Current temp", myKind.Status.Temperature)
 
 	// Don't requeue, future changes will trigger Reconcile
 	return ctrl.Result{}, nil
