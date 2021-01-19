@@ -1,0 +1,24 @@
+# permissions for end users to edit weatherwarnings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: weatherwarning-editor-role
+rules:
+- apiGroups:
+  - weather-app.example.com
+  resources:
+  - weatherwarnings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - weather-app.example.com
+  resources:
+  - weatherwarnings/status
+  verbs:
+  - get

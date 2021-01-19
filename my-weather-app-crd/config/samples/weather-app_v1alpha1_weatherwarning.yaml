@@ -1,0 +1,6 @@
+apiVersion: weather-app.example.com/v1alpha1
+kind: WeatherWarning
+metadata:
+  name: weatherwarning-sample
+spec:
+  maxtemperature: 12

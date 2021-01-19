@@ -1,0 +1,20 @@
+# permissions for end users to view weatherwarnings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: weatherwarning-viewer-role
+rules:
+- apiGroups:
+  - weather-app.example.com
+  resources:
+  - weatherwarnings
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - weather-app.example.com
+  resources:
+  - weatherwarnings/status
+  verbs:
+  - get

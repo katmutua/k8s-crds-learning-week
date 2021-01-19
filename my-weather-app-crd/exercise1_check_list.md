@@ -58,3 +58,21 @@ $ make run
 ```
 $ kubectl apply -f config/samples/weather-app_v1alpha1_checkweather.yaml
 ```
+
+## Main Exercise
+
+1. Create another controller and CRD called WeatherWarning
+```
+kubebuilder create api --group weather-app --version v1alpha1 --kind WeatherWarning
+```
+
+2. Set max temperature as part of the weather warning spec and apply the configs
+
+```
+kubectl delete  checkweather checkweather-sample && kubectl delete  weatherwarning weatherwarning-sample
+kubectl apply -f config/samples/weather-app_v1alpha1_checkweather.yaml && kubectl apply -f config/samples/weather-app_v1alpha1_weatherwarning.yaml
+make install
+make run
+```
+3. Update the controller with the if logic to check against the CheckWeather resource
+   and log as appropriate.
