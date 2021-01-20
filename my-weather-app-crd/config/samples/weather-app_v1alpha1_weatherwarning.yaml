@@ -3,6 +3,6 @@ kind: WeatherWarning
 metadata:
   name: weatherwarning-sample
 spec:
-  target-check-name: checkweather-sample
-  target-check-namespace: weather-testing
-  temp-threshold: 17
+  targetcheckname: checkweather-sample
+  targetnamespace: weather-testing
+  tempthreshold: 17

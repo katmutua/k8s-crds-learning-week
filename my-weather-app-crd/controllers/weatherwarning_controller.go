@@ -20,6 +20,7 @@ import (
 	"context"
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -35,7 +36,7 @@ type WeatherWarningReconciler struct {
 
 // +kubebuilder:rbac:groups=weather-app.example.com,resources=weatherwarnings,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=weather-app.example.com,resources=weatherwarnings/status,verbs=get;update;patch
-
+// +kubebuilder:rbac:groups=weather-app.example.com,resources=checkweathers,verbs=get;list;watch
 func (r *WeatherWarningReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	ctx := context.Background()
 	log := r.Log.WithValues("namespace", req.Namespace, "weatherwarning", req.Name)
@@ -51,14 +52,27 @@ func (r *WeatherWarningReconciler) Reconcile(req ctrl.Request) (ctrl.Result, err
 	log.Info("current max comfort temperature set at", "temperatureThreshold", temperatureThreshold)
 
 	log.Info("fetching CheckWeather resource")
-	myKind := weatherappv1alpha1.CheckWeather{}
-	if err := r.Client.Get(ctx, req.NamespacedName, &myKind); err != nil {
-		log.Error(err, "failed to get MyKind resource")
-		return ctrl.Result{}, client.IgnoreNotFound(err)
-	}
-	log.Info("Current temp", myKind.Status.Temperature)
+	var cw weatherappv1alpha1.CheckWeather
 
-	// Don't requeue, future changes will trigger Reconcile
+	// build the NamespacedName from the value specified from the the WeatherWarning
+	cv := types.NamespacedName{Name: ww.Spec.TargetCheckName, Namespace: ww.Spec.TargetCheckNamespace}
+	if err := r.Get(ctx, cv, &cw); err != nil {
+		log.Error(err, "unable to fetch CheckWeather Object")
+		return ctrl.Result{}, err
+	}
+
+	if cw.Status.State == "" {
+		cw.Status.State = weatherappv1alpha1.StatePending
+	}
+	temp := cw.Status.Temperature
+	switch cw.Status.State {
+	case weatherappv1alpha1.StateFinished:
+		log.Info("current temperature", "temp", temp)
+		//handle case where the status has not changed
+	default:
+		//handle case
+	}
+	//Don't requeue, future changes will trigger Reconcile
 	return ctrl.Result{}, nil
 }
 

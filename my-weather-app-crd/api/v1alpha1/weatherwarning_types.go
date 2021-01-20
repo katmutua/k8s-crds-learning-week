@@ -29,9 +29,9 @@ type WeatherWarningSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of WeatherWarning. Edit WeatherWarning_types.go to remove/update
-	TargetCheckName      string `json:"target-check-name"`
-	TargetCheckNamespace string `json:"target-check-namespace"`
-	TempThreshHold       int32  `json:"target-threshold,omitempty"`
+	TargetCheckName      string `json:"targetcheckname"`
+	TargetCheckNamespace string `json:"targetnamespace"`
+	TempThreshHold       int32  `json:"tempthreshold,omitempty"`
 }
 
 // WeatherWarningStatus defines the observed state of WeatherWarning

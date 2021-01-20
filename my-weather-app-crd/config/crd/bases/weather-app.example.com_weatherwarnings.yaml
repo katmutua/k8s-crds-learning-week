@@ -34,18 +34,18 @@ spec:
         spec:
           description: WeatherWarningSpec defines the desired state of WeatherWarning
           properties:
-            target-check-name:
+            targetcheckname:
               description: Foo is an example field of WeatherWarning. Edit WeatherWarning_types.go
                 to remove/update
               type: string
-            target-check-namespace:
+            targetnamespace:
               type: string
-            target-threshold:
+            tempthreshold:
               format: int32
               type: integer
           required:
-          - target-check-name
-          - target-check-namespace
+          - targetcheckname
+          - targetnamespace
           type: object
         status:
           description: WeatherWarningStatus defines the observed state of WeatherWarning
