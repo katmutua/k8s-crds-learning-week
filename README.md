@@ -1,6 +1,6 @@
 # k8s-crds-learning-week
 
-Objectives
+#### Objectives
 
 *Day 1:* Build a basic CRD using KubeBuilder
 *Day 2:* BYO CRD controller exercise 1
