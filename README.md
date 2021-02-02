@@ -6,7 +6,7 @@
 *Day 2:* BYO CRD controller exercise 1
 *Day 3:* BYO CRD controller exercise 2
 
-Minikube
+#### Minikube
 
 Create a deployment
 ```
