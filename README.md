@@ -34,6 +34,6 @@ Other
 kubectl get pod,svc -n kube-system
 ```
 
-For the custom resources created with kubebuilder, kubebuilder creates default rbac rules; edit these to
+For the custom resources created with kubebuilder you will see default rbac rules; edit these to
 make sure that the scope of permissions provided match your use case because the default configuration
 might be too open.
